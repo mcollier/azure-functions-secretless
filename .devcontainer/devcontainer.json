@@ -1,0 +1,27 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.187.0/containers/azure-functions-dotnetcore-3.1
+{
+	"name": "Azure Functions & C# - .NET Core 3.1",
+	"dockerFile": "Dockerfile",
+	"forwardPorts": [
+		7071
+	],
+	// Set *default* container specific settings.json values on container create.
+	"settings": {},
+	"mounts": [
+		// Saves the bash terminal history between instances of the devcontainer
+		"type=volume,source=azfuncsecretlesscommandhistory,target=/home/vscode/commandhistory",
+		// Mounts the login details from the host machine to azcli works in the container
+		"type=bind,source=${env:HOME}${env:USERPROFILE}/.azure,target=/home/vscode/.azure"
+	],
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-vscode.vscode-node-azure-pack",
+		"ms-vscode.azure-account",
+		"ms-dotnettools.csharp"
+	],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "dotnet restore",
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+}
