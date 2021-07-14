@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Azure.EventHubs;
+using Azure.Messaging.EventHubs;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Azure.Samples
 {
     public static class MyFunctions
     {
         [FunctionName("QueueTrigger")]
-        public static void QueueTriggerFunction([QueueTrigger("%QueueName%")] CloudQueueMessage myQueueItem, ILogger log)
+        public static void QueueTriggerFunction([QueueTrigger("%QueueName%", Connection = "StorageQueueConnection")] QueueMessage myQueueItem, ILogger log)
         {
-            log.LogInformation($"C# Queue trigger function processed - Body: {myQueueItem.AsString}");
+            log.LogInformation($"C# Queue trigger function processed - Body: {myQueueItem.Body}");
         }
 
         [FunctionName("TimerTrigger")]
@@ -23,7 +23,6 @@ namespace Azure.Samples
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
         }
-
 
         [FunctionName("EventHubTrigger")]
         public static async Task EventHubTriggerFunction([EventHubTrigger("%EventHubName%", Connection = "EventHubConnection")] EventData[] events, ILogger log)
@@ -34,7 +33,7 @@ namespace Azure.Samples
             {
                 try
                 {
-                    string messageBody = Encoding.UTF8.GetString(eventData.Body.Array, eventData.Body.Offset, eventData.Body.Count);
+                    string messageBody = Encoding.UTF8.GetString(eventData.EventBody);
 
                     // Replace these two lines with your processing logic.
                     log.LogInformation($"C# Event Hub trigger function processed a message: {messageBody}");
