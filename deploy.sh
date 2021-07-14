@@ -13,4 +13,4 @@ else
     echo "Resource group '$resourceGroupName' already exists, skipping . . ."
 fi
 
-az deployment group create --name $deploymentLabel --resource-group $resourceGroupName --template-file ./infrastructure/bicep/main.bicep
+az deployment group create --name $deploymentLabel --resource-group $resourceGroupName --template-file ./src/bicep/main.bicep

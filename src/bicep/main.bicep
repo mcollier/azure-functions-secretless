@@ -37,6 +37,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   kind: 'StorageV2'
 }
 
+resource storageQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2021-04-01' = {
+  name: '${storageAccount.name}/default/widgets'
+}
+
 resource appInsights 'Microsoft.Insights/components@2018-05-01-preview' = {
   name: appInsightsName
   location: appInsightsLocation
