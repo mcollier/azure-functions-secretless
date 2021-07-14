@@ -4,7 +4,7 @@
             "enabled": true,
             "rules": {
                 "no-hardcoded-env-urls": {
-                    "level": "error"
+                    "level": "warning"
                 },
                 "no-unused-params": {
                     "level": "error"
