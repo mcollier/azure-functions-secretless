@@ -41,6 +41,10 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git /home/$USERNAME/
     # Alias Powershell
     && echo "alias powershell=pwsh" >> "/home/$USERNAME/.bashrc"    
 
+# Create a folder for Azurite files.
+RUN mkdir -p /home/$USERNAME/azurite \
+    && chown -R $USERNAME /home/$USERNAME/azurite
+
 # Uncomment if not running as root (e.g., vscode).
 USER $USERNAME
 

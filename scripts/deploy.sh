@@ -1,7 +1,7 @@
 #!/bin/bash
 
-resourceGroupName=spark-azure-func-secretless
-location=northcentralus
+resourceGroupName=spark-azure-func-secretless-3
+location=eastus
 deploymentLabel=bicep-deploy-"$(date +'%Y%m%d_%H%M%S')"
 
 if [ $(az group exists --name $resourceGroupName) = false ]; then
@@ -24,9 +24,3 @@ for resource in $outputResources; do
         echo $functionName
     fi
 done
-
-# Change to the directory where the Azure Function app resides.
-cd ./src/function
-
-# Publish the function app.
-func azure functionapp publish $functionName

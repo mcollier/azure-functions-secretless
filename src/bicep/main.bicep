@@ -26,8 +26,10 @@ param hostingPlanName string = 'plan-${uniqueString(resourceGroup().id)}'
 param storageAccountType string = 'Standard_LRS'
 
 var storageAccountName = 'st${uniqueString(resourceGroup().id)}'
+var storageQueueName = 'orders'
 var appInsightsName = 'appi-${uniqueString(resourceGroup().id)}'
-var storageQueueName = 'widgets'
+var eventHubNamespaceName = 'evhns-${uniqueString(resourceGroup().id)}'
+var eventHubName = 'items'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageAccountName
@@ -40,6 +42,24 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
 
 resource storageQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2021-04-01' = {
   name: '${storageAccount.name}/default/${storageQueueName}'
+}
+
+resource eventHubNamespace 'Microsoft.EventHub/namespaces@2021-01-01-preview' = {
+  name: eventHubNamespaceName
+  location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Standard'
+  }
+}
+
+resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-01-01-preview' = {
+  parent: eventHubNamespace
+  name: eventHubName
+  properties: {
+    messageRetentionInDays: 7
+    partitionCount: 32
+  }
 }
 
 resource appInsights 'Microsoft.Insights/components@2018-05-01-preview' = {
@@ -99,6 +119,14 @@ resource function 'Microsoft.Web/sites@2020-06-01' = {
         {
           name: 'QueueName'
           value: storageQueueName
+        }
+        {
+          name: 'EventHubName'
+          value: eventHubName
+        }
+        {
+          name: 'EventHubConnection'
+          value: listKeys(resourceId('Microsoft.EventHub/namespaces/authorizationRules', eventHubNamespaceName, 'RootManageSharedAccessKey'), '2021-01-01-preview').primaryConnectionString
         }
       ]
     }
