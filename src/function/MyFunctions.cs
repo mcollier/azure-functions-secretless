@@ -24,7 +24,6 @@ namespace Azure.Samples
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
         }
 
-
         [FunctionName("EventHubTrigger")]
         public static async Task EventHubTriggerFunction([EventHubTrigger("%EventHubName%", Connection = "EventHubConnection")] EventData[] events, ILogger log)
         {
