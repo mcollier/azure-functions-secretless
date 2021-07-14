@@ -1,6 +1,6 @@
 #!/bin/bash
 
-resourceGroupName=spark-azure-func-secretless-3
+resourceGroupName=spark-azure-func-secretless-no
 location=eastus
 deploymentLabel=bicep-deploy-"$(date +'%Y%m%d_%H%M%S')"
 

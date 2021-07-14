@@ -13,7 +13,7 @@ namespace Azure.Samples
     public static class MyFunctions
     {
         [FunctionName("QueueTrigger")]
-        public static void QueueTriggerFunction([QueueTrigger("%QueueName%")] CloudQueueMessage myQueueItem, ILogger log)
+        public static void QueueTriggerFunction([QueueTrigger("%QueueName%", Connection = "StorageQueueConnection")] CloudQueueMessage myQueueItem, ILogger log)
         {
             log.LogInformation($"C# Queue trigger function processed - Body: {myQueueItem.AsString}");
         }
