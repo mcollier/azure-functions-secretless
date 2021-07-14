@@ -27,6 +27,7 @@ param storageAccountType string = 'Standard_LRS'
 
 var storageAccountName = 'st${uniqueString(resourceGroup().id)}'
 var appInsightsName = 'appi-${uniqueString(resourceGroup().id)}'
+var storageQueueName = 'widgets'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageAccountName
@@ -38,7 +39,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
 }
 
 resource storageQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2021-04-01' = {
-  name: '${storageAccount.name}/default/widgets'
+  name: '${storageAccount.name}/default/${storageQueueName}'
 }
 
 resource appInsights 'Microsoft.Insights/components@2018-05-01-preview' = {
@@ -81,7 +82,11 @@ resource function 'Microsoft.Web/sites@2020-06-01' = {
         }
         {
           name: 'AzureWebJobsStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix= ${environment().suffixes.storage};AccountKey=${listkeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listkeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+        }
+        {
+          name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listkeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};'
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'
@@ -90,6 +95,10 @@ resource function 'Microsoft.Web/sites@2020-06-01' = {
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: functionRuntime
+        }
+        {
+          name: 'QueueName'
+          value: storageQueueName
         }
       ]
     }

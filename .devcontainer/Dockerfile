@@ -22,7 +22,7 @@ ARG USER_GID=$USER_UID
 # Install system tools
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends apt-utils zip unzip curl bash-completion dnsutils \
+    && apt-get -y install --no-install-recommends apt-utils zip unzip curl bash-completion dnsutils jq \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
