@@ -33,6 +33,7 @@ var eventHubName = 'items'
 var packageContainerName = 'packages'
 
 // -- SECRETLESS -- //
+// https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 var storageBlobContributorRoleDefinitionId = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 var storageQueueContributorRoleDefinitionId = '974c5e8b-45b9-4653-ba55-5f855dd0fb88'
 var eventHubsDataReceiverRoleDefinitionId = 'a638d3c7-ab3a-418d-83e6-5f17a39d4fde'
