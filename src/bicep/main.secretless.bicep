@@ -142,7 +142,7 @@ resource function 'Microsoft.Web/sites@2020-06-01' = {
           value: storageAccount.name
         }
         {
-          name: 'StorageQueueConnection__credential'
+          name: 'StorageQueueConnection__credential' //NOTE: Temporary issue; Azure-hosted only!
           value: 'managedIdentity'
         }
         {
@@ -154,7 +154,7 @@ resource function 'Microsoft.Web/sites@2020-06-01' = {
           value: '${eventHubNamespace.name}.servicebus.windows.net'
         }
         {
-          name: 'EventHubConnection__credential'
+          name: 'EventHubConnection__credential' //NOTE: Temporary issue; Azure-hosted only!
           value: 'managedIdentity'
         }
         {

@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "InputQueueName": "widgets",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true", // why do I need this locally?
+    "AzureWebJobsStorage__accountName": "stloeqmyrc4isv6",
+    "QueueConnection__accountName": "stloeqmyrc4isv6"
+  }
+}
